@@ -1,0 +1,1 @@
+include ':app', ':bwidgetutil', ':jsonutilstest', ':test'

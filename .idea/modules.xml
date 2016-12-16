@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BigNews.iml" filepath="$PROJECT_DIR$/BigNews.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bwidgetutil/bwidgetutil.iml" filepath="$PROJECT_DIR$/bwidgetutil/bwidgetutil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jsonutilstest/jsonutilstest.iml" filepath="$PROJECT_DIR$/jsonutilstest/jsonutilstest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+    </modules>
+  </component>
+</project>
