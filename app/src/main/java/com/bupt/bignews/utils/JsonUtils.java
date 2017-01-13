@@ -35,9 +35,9 @@ public class JsonUtils {
         JsonObject result = jsonObject.get("result").getAsJsonObject();
         JsonArray data = result.get("data").getAsJsonArray();
         for(JsonElement jsonElement: data){
-            ListNewsBean bean = new ListNewsBean();
-            bean=gson.fromJson(jsonElement,ListNewsBean.class);
-            listNewsBeans.add(bean);
+                ListNewsBean bean = new ListNewsBean();
+                bean = gson.fromJson(jsonElement, ListNewsBean.class);
+                listNewsBeans.add(bean);
         }
         return listNewsBeans;
     }

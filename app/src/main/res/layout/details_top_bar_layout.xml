@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="49dp"
     android:background="@color/mask_tags_8"
@@ -15,13 +16,31 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/btn_back_selector"/>
-        <TextView
-            android:layout_centerInParent="true"
-            android:text="文章详情"
-            android:textSize="18sp"
-            android:textColor="@color/color_white"
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <com.bupt.bignews.widget.RoundAngleImageView
+                android:id="@+id/source_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/backgroundimg"
+                app:roundHeight="20dp"
+                app:roundWidth="20dp"
+                android:scaleType="fitXY"
+                />
+            <TextView
+                android:id="@+id/top_bar_title"
+                android:text="文章详情"
+                android:textSize="12sp"
+                android:textColor="@color/color_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+
         <Button
             android:id="@+id/btn_share"
             android:layout_marginRight="5dp"

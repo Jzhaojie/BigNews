@@ -7,31 +7,9 @@ import java.text.SimpleDateFormat;
  * Created by ZhaoJie1234 on 2016/12/7.
  */
 public class ListNewsBean implements Serializable{
-    public String title;
-    public String date;
-    public String author_name;
-    public String thumbnail_pic_s;
-    public String thumbnail_pic_s1;
-    public String thumbnail_pic_s2;
-    public String url;
-    public String uniquekey;
-    public String type;
-    public String realtype;
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public ListNewsBean() {
+        super();
     }
 
     public String getAuthor_name() {
@@ -42,12 +20,20 @@ public class ListNewsBean implements Serializable{
         this.author_name = author_name;
     }
 
-    public String getData() {
+    public String getDate() {
         return date;
     }
 
-    public void setData(String data) {
-        this.date = data;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public static int getNoImage() {
+        return NO_IMAGE;
+    }
+
+    public static int getOneImage() {
+        return ONE_IMAGE;
     }
 
     public String getRealtype() {
@@ -56,6 +42,10 @@ public class ListNewsBean implements Serializable{
 
     public void setRealtype(String realtype) {
         this.realtype = realtype;
+    }
+
+    public static int getThreeImage() {
+        return THREE_IMAGE;
     }
 
     public String getThumbnail_pic_s1() {
@@ -90,6 +80,14 @@ public class ListNewsBean implements Serializable{
         this.title = title;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getUniquekey() {
         return uniquekey;
     }
@@ -97,6 +95,28 @@ public class ListNewsBean implements Serializable{
     public void setUniquekey(String uniquekey) {
         this.uniquekey = uniquekey;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String title;
+    public String date;
+    public String author_name;
+    public String thumbnail_pic_s;
+    public String thumbnail_pic_s1;
+    public String thumbnail_pic_s2;
+    public String url;
+    public String uniquekey;
+    public String type;
+    public String realtype;
+    public static final int NO_IMAGE=1;
+    public static final int ONE_IMAGE=2;
+    public static final int THREE_IMAGE=3;
 
     @Override
     public String toString() {

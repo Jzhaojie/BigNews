@@ -1,5 +1,8 @@
 package com.bupt.bignews.application;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 import java.util.HashMap;
 
 /**
@@ -15,9 +18,15 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initImageLoader();
         this.instance =this;
     }
     public static Application getInstance(){
         return instance;
+    }
+
+    private void initImageLoader(){
+        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(this);
+        ImageLoader.getInstance().init(configuration);
     }
 }

@@ -11,6 +11,10 @@ public class MessageEvent {
         this.listNewsBean = listNewsBean;
     }
 
+    public MessageEvent() {
+        super();
+    }
+
     public ListNewsBean getListNewsBean() {
         return listNewsBean;
     }

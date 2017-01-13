@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
-    <TextView
-        android:id="@+id/tv_page"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="@string/hello_world"
-        android:textColor="@color/color_black"
-        android:gravity="center"/>
-</LinearLayout>
+
+    <com.bupt.bwidgetutil.PullToRefreshListView
+        android:id="@+id/fragment_listview"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:cacheColorHint="@color/color_transparent"
+        android:divider="@drawable/bottom_line_gray"
+        android:dividerHeight="2dp"
+        android:scrollbars="vertical">
+
+    </com.bupt.bwidgetutil.PullToRefreshListView>
+    <FrameLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/prompt_framelayout">
+        <include layout="@layout/loading"/>
+        <include layout="@layout/empty"/>
+        <include layout="@layout/error"/>
+    </FrameLayout>
+</RelativeLayout>
 <!--<android.support.v4.widget.SwipeRefreshLayout-->
     <!--android:id="@+id/swipeRefreshLayout"-->
     <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
@@ -23,13 +36,5 @@
         <!--android:layout_height="fill_parent"-->
         <!--android:scrollbars="vertical"-->
         <!--&gt;</android.support.v7.widget.RecyclerView>-->
-    <!--<FrameLayout-->
-        <!--android:visibility="gone"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/prompt_framelayout">-->
-        <!--<include layout="@layout/loading"/>-->
-        <!--<include layout="@layout/empty"/>-->
-        <!--<include layout="@layout/error"/>-->
-    <!--</FrameLayout>-->
+
 <!--</android.support.v4.widget.SwipeRefreshLayout>-->

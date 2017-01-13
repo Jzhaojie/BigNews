@@ -12,5 +12,4 @@ package utils;
 public class SharedPreferencesTag {
     public static final String DEMO_KEY="demo_key";
     public static final String IS_HAVE_NEW_VERSION = "is_have_new_version"; // 标识是否有最新版本
-
 }

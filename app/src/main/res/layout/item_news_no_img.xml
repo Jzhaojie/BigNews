@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="80dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="10dp"
     android:orientation="horizontal">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
@@ -17,43 +17,43 @@
             android:text="苟利国家生死以，岂因祸福避趋之"
             android:textColor="@color/color_black"
             android:maxLines="2"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:layout_marginRight="4dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="60dp" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp">
+            android:layout_height="20dp">
             <TextView
                 android:id="@+id/item_news_tv_source"
                 android:text="人民网"
-                android:textSize="10sp"
+                android:textSize="15sp"
                 android:textStyle="normal"
                 android:textColor="@color/color_grey"
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"
+                android:layout_height="20dp"
                 android:layout_gravity="bottom"/>
             <TextView
                 android:id="@+id/item_news_tv_comments"
                 android:text="评论数"
-                android:textSize="10sp"
+                android:textSize="15sp"
                 android:textStyle="normal"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/color_grey"
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"
+                android:layout_height="20dp"
                 android:layout_gravity="bottom"/>
             <TextView
                 android:id="@+id/item_news_tv_time"
                 android:text="5分钟前"
-                android:textSize="10sp"
+                android:textSize="15sp"
                 android:textStyle="normal"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/color_grey"
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"
+                android:layout_height="20dp"
                 android:layout_gravity="bottom"/>
         </LinearLayout>
     </LinearLayout>
