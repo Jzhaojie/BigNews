@@ -21,7 +21,8 @@
         <activity
             android:name=".ui.MainActivity"
             android:theme="@style/App_Theme" />
-        <activity android:name=".ui.ArticleActivity"></activity>
+        <activity android:name=".ui.ArticleActivity" />
+        <activity android:name=".ui.LoginActivity"></activity>
     </application>
 
 </manifest>

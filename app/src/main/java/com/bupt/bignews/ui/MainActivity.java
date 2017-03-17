@@ -2,15 +2,19 @@ package com.bupt.bignews.ui;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupt.bignews.R;
 import com.bupt.bignews.adapter.LeftItemAdapter;
+import com.bupt.bignews.application.Application;
 import com.bupt.bignews.ui.base.BaseActivity;
 import com.bupt.bignews.widget.DragLayout;
 import com.nineoldandroids.view.ViewHelper;
@@ -23,6 +27,8 @@ public class MainActivity extends BaseActivity {
     private ListView lv_left_main;
     private ImageView iv_bottom;
     private TextView iv_username,iv_email;
+    private Application myApplication;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,7 @@ public class MainActivity extends BaseActivity {
         initValidata();
         initListener();
         bindData();
+        myApplication = (Application)getApplication();
     }
     public void initView(){
         drag_layout = (DragLayout)findViewById(R.id.drag_layout);
@@ -44,10 +51,36 @@ public class MainActivity extends BaseActivity {
     public void initValidata(){
         lv_left_main.setAdapter(new LeftItemAdapter());
 
+
     }
     public void initListener(){
         drag_layout.setDragListener(new CustomDragListener());
         top_bar_icon.setOnClickListener(new CustomOnClickListener());
+        lv_left_main.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            Intent intent = new Intent();
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 0:
+                        Toast.makeText(MainActivity.this,"hello",Toast.LENGTH_SHORT);
+                }
+
+            }
+        });
+
+        ll1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(null!=myApplication.getLoginUser()){
+                    //head to user login activity
+                    openActivity(LoginActivity.class);
+                }else{
+                    //head to user info activity
+                }
+            }
+        });
+
+
     }
     public void bindData(){
 
@@ -77,4 +110,5 @@ public class MainActivity extends BaseActivity {
     public DragLayout getDrag_layout(){
         return drag_layout;
     }
+
 }
