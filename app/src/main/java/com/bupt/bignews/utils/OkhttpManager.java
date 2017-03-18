@@ -32,6 +32,9 @@ public class OkhttpManager {
     private static OkhttpManager okhttpManager = null;
     private OkHttpClient client;
     private Handler handler;
+    private ApiUtils apiUtils;
+
+
 
     private OkhttpManager(){
         client = new OkHttpClient();
@@ -139,6 +142,7 @@ public class OkhttpManager {
                 .post(body)
                 .addHeader("accept","application/json")
                 .addHeader("content-type","application/json")
+                .addHeader("connection","keep-alive")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -151,6 +155,36 @@ public class OkhttpManager {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 deliverSuccess(response.body().string(),callBack);
+            }
+        });
+
+    }
+
+
+
+    /**
+     *
+     * get userinfo
+     *
+     */
+    private void g_Userinfo(String url, String token, final DataCallBack callBack) {
+
+        client = new OkHttpClient();
+        final Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .addHeader("accept", "application/json")
+                .addHeader("authorization", "Token " + token)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                deliverFailure(request, e, callBack);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                deliverSuccess(response.body().string(), callBack);
             }
         });
 
@@ -270,12 +304,27 @@ public class OkhttpManager {
     public static void postAsyncParams(String url,Map<String,String> params,DataCallBack callBack){
         getInstance().p_postAsyncParams(url, params, callBack);
     }
-    /*
-    * 进行post User 到服务器，login
-    * */
+
+    /**
+     * 将user post 到服务器登陆
+     * @param url
+     * @param user
+     * @param callBack
+     */
     public static void postLoginUser(String url,LoginUser user,DataCallBack callBack){
         getInstance().p_user(url,user,callBack);
     }
+
+    /**
+     * 从服务器get userinfo
+     * @param url
+     * @param token
+     * @param callBack
+     */
+    public static void getUserInfo(String url,String token,DataCallBack callBack){
+        getInstance().g_Userinfo(url,token,callBack);
+    }
+
 
 
     /**

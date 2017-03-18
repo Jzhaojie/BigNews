@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +21,16 @@ import com.bupt.bignews.R;
 import com.bupt.bignews.common.DefineView;
 import com.bupt.bignews.entity.LoginUser;
 import com.bupt.bignews.entity.User;
+import com.bupt.bignews.utils.ApiUtils;
 import com.bupt.bignews.utils.JellyInterpolator;
+import com.bupt.bignews.utils.JsonUtils;
 import com.bupt.bignews.utils.OkhttpManager;
+import com.bupt.bignews.utils.TokenUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONObject;
 
 import okhttp3.Request;
 
@@ -45,6 +54,10 @@ public class LoginActivity extends Activity implements DefineView {
     private String tempName,tempPassword;
 
     private User getUser;     //get userinfo
+
+    private TokenUtil tokenUtil;
+
+    private ApiUtils apiUtils;
 
     private final static String LOGIN_URL="http://123.207.146.172:8000/rest-auth/login/";
 
@@ -75,7 +88,7 @@ public class LoginActivity extends Activity implements DefineView {
 
     @Override
     public void initValidata() {
-
+        tokenUtil = new TokenUtil(this);
     }
 
     @Override
@@ -173,7 +186,7 @@ public class LoginActivity extends Activity implements DefineView {
     public void bindData() {
 
     }
-    public void userLogin(LoginUser user){
+    public void userLogin(final LoginUser user){
         if(user.getPassword().isEmpty()||user.getUsername().isEmpty()){
             Toast.makeText(LoginActivity.this,"用户名或者密码不能为空",Toast.LENGTH_SHORT).show();
             Log.i("zhaojie", "userLogin: 用户名或者密码能为空");
@@ -191,8 +204,10 @@ public class LoginActivity extends Activity implements DefineView {
                 @Override
                 public void requestSuccess(String result) {
                     Log.i("zhaojie:", "requestSuccess: "+result);
+                    JsonParser parser = new JsonParser();
+                    JsonObject json = (JsonObject)parser.parse(result);
+                    tokenUtil.saveToken(user.getUsername(),json.get("key").getAsString());
                     getUserInfo();
-
                     LoginActivity.this.finish();
                 }
             });
@@ -201,22 +216,20 @@ public class LoginActivity extends Activity implements DefineView {
 
     public void getUserInfo() {
         getUser = new User();
-        OkhttpManager.getAsync(USER_DETAIL, new OkhttpManager.DataCallBack() {
+        apiUtils = new ApiUtils();
+        OkhttpManager.getUserInfo(apiUtils.getApiUrl().get("login"),tokenUtil.getToken().get("token"), new OkhttpManager.DataCallBack() {
             @Override
             public void requestFailure(Request request, Exception e) {
-                Log.i("zhaojie:", "requestFailure:请求失败 ");
+                Log.i("zhaojie", "requestFailure:request failure");
             }
 
             @Override
             public void requestSuccess(String result) {
-
-                Log.i("zhaojie:", "requestSuccess: "+result);
-
-
+                Gson gson = new Gson();
+                getUser = gson.fromJson(result,User.class);
+                Log.i("zhaojie", "requestSuccess: "+getUser.toString());
             }
         });
-
-
     }
 
 }
