@@ -7,10 +7,14 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupt.bignews.R;
+import com.bupt.bignews.application.Application;
 import com.bupt.bignews.common.DefineView;
 import com.bupt.bignews.entity.LoginUser;
 import com.bupt.bignews.entity.User;
@@ -26,11 +31,15 @@ import com.bupt.bignews.utils.JellyInterpolator;
 import com.bupt.bignews.utils.JsonUtils;
 import com.bupt.bignews.utils.OkhttpManager;
 import com.bupt.bignews.utils.TokenUtil;
+import com.bupt.bignews.utils.UserUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Request;
 
@@ -59,21 +68,40 @@ public class LoginActivity extends Activity implements DefineView {
 
     private ApiUtils apiUtils;
 
+    private UserUtils userUtils;
+
+    private Intent reIntent;
+
     private final static String LOGIN_URL="http://123.207.146.172:8000/rest-auth/login/";
 
     private final static String USER_DETAIL="http://123.207.146.172:8000/rest-auth/user";
+
+    private final static String TAG = "zhaojie";
+
+    private User returnUser;
+
+    private Bundle bundle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //        当系统版本为4.4或者4.4以上的时候可以使用沉浸式状态栏
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+//            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            //getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+        }
         setContentView(R.layout.login);
         initView();
         initValidata();
         initListener();
         bindData();
-    }
 
+    }
     @Override
     public void initView() {
         mBtnLogin = (TextView)findViewById(R.id.main_btn_login);
@@ -88,7 +116,10 @@ public class LoginActivity extends Activity implements DefineView {
 
     @Override
     public void initValidata() {
-        tokenUtil = new TokenUtil(this);
+        tokenUtil = new TokenUtil(getApplicationContext());
+        reIntent = new Intent();
+        returnUser = new User();
+        bundle = new Bundle();
     }
 
     @Override
@@ -203,33 +234,26 @@ public class LoginActivity extends Activity implements DefineView {
 
                 @Override
                 public void requestSuccess(String result) {
-                    Log.i("zhaojie:", "requestSuccess: "+result);
+                    Log.i("zhaojie:", "requestToken: "+result);
                     JsonParser parser = new JsonParser();
                     JsonObject json = (JsonObject)parser.parse(result);
-                    tokenUtil.saveToken(user.getUsername(),json.get("key").getAsString());
-                    getUserInfo();
+                    String token = json.get("key").toString();
+                    String key = token.substring(1,token.length()-1);
+                    Log.i("zhaojie", "requestSucce:"+key);
+                    tokenUtil.saveToken(user.getUsername(),key);
+                    Log.i(TAG, "getToken: "+tokenUtil.getToken());
+                    Log.i(TAG, "requestSuccess: "+"helloworld");
+                    userUtils = new UserUtils();
+                    userUtils.getUserInfo(getApplicationContext());
+                    returnUser = Application.getInstance().getLoginUser();
+                    bundle.putString("username",returnUser.getUsername());
+                    bundle.putString("head_img",returnUser.getHead_img());
+                    reIntent.putExtra("loginuser",bundle);
+                    LoginActivity.this.setResult(0,reIntent);
+                    Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_LONG).show();
                     LoginActivity.this.finish();
                 }
             });
         }
     }
-
-    public void getUserInfo() {
-        getUser = new User();
-        apiUtils = new ApiUtils();
-        OkhttpManager.getUserInfo(apiUtils.getApiUrl().get("login"),tokenUtil.getToken().get("token"), new OkhttpManager.DataCallBack() {
-            @Override
-            public void requestFailure(Request request, Exception e) {
-                Log.i("zhaojie", "requestFailure:request failure");
-            }
-
-            @Override
-            public void requestSuccess(String result) {
-                Gson gson = new Gson();
-                getUser = gson.fromJson(result,User.class);
-                Log.i("zhaojie", "requestSuccess: "+getUser.toString());
-            }
-        });
-    }
-
 }

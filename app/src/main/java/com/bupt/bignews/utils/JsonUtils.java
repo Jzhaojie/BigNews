@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.bupt.bignews.entity.CategoriesBean;
 import com.bupt.bignews.entity.ListNewsBean;
+import com.bupt.bignews.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -40,5 +41,12 @@ public class JsonUtils {
                 listNewsBeans.add(bean);
         }
         return listNewsBeans;
+    }
+    public static User getJsonUser(String userJson){
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonParser().parse(userJson).getAsJsonObject();
+        User user = new User();
+        user = gson.fromJson(jsonObject,User.class);
+        return user;
     }
 }

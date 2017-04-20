@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="名字：zhaojie"
+                android:text=""
                 android:textColor="#ffffff"
                 android:textSize="18sp"/>
             <TextView

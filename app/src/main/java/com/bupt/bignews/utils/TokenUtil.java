@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.bupt.bignews.entity.TokenBean;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ public class TokenUtil {
     private Context context;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    private TokenBean tokenBean;
 
     public TokenUtil(Context context){
         this.context = context;
@@ -31,12 +34,10 @@ public class TokenUtil {
     /*
     * 获取token
     * */
-    public Map<String,String> getToken(){
-        Map<String,String> params = new HashMap<String,String>();
+    public String getToken(){
         SharedPreferences preferences = context.getSharedPreferences("user",Context.MODE_PRIVATE);
-        params.put("username",preferences.getString("username",""));
-        params.put("token",preferences.getString("token",""));
-        return  params;
+        return preferences.getString("token","");
+
     }
     /*
     * 删除token

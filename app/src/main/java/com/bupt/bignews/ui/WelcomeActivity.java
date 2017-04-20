@@ -14,16 +14,20 @@ import android.widget.Button;
 
 import com.bupt.bignews.R;
 import com.bupt.bignews.ui.base.BaseActivity;
+import com.bupt.bignews.utils.UserUtils;
 import com.bupt.bignews.widget.CustomVideoView;
 
 
 public class WelcomeActivity extends BaseActivity {
     private CustomVideoView welcome_videoview;
     private Button welcome_button;
+    private UserUtils userUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        userUtils = new UserUtils();
+        userUtils.getUserInfo(getApplicationContext());
         welcome_videoview = (CustomVideoView) findViewById(R.id.welcome_videoview);
         welcome_button = (Button) findViewById(R.id.welcome_button);
         welcome_videoview.setVideoURI(Uri.parse("android.resource://"

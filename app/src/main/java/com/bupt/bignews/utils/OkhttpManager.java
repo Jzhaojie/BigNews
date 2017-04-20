@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.ContactsContract;
 import android.support.v7.util.AsyncListUtil;
+import android.util.Log;
 
 import com.bupt.bignews.entity.LoginUser;
 import com.google.gson.Gson;
@@ -167,15 +168,17 @@ public class OkhttpManager {
      * get userinfo
      *
      */
-    private void g_Userinfo(String url, String token, final DataCallBack callBack) {
-
+    private void g_Userinfo(String url, String token,final DataCallBack callBack){
+        token = "Token "+token;
         client = new OkHttpClient();
         final Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .addHeader("accept", "application/json")
-                .addHeader("authorization", "Token " + token)
+                .addHeader("authorization", token)
+                .addHeader("cache-control","no-cache")
                 .build();
+        Log.i("zhaojie", "requestheader:"+request.headers().toString());
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -319,13 +322,11 @@ public class OkhttpManager {
      * 从服务器get userinfo
      * @param url
      * @param token
-     * @param callBack
+     *
      */
     public static void getUserInfo(String url,String token,DataCallBack callBack){
         getInstance().g_Userinfo(url,token,callBack);
     }
-
-
 
     /**
      * 进行异步下载文件

@@ -4,6 +4,7 @@ package com.bupt.bignews.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -15,9 +16,13 @@ import android.widget.Toast;
 import com.bupt.bignews.R;
 import com.bupt.bignews.adapter.LeftItemAdapter;
 import com.bupt.bignews.application.Application;
+import com.bupt.bignews.entity.User;
 import com.bupt.bignews.ui.base.BaseActivity;
+import com.bupt.bignews.utils.TokenUtil;
+import com.bupt.bignews.utils.UserUtils;
 import com.bupt.bignews.widget.DragLayout;
 import com.nineoldandroids.view.ViewHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MainActivity extends BaseActivity {
     //    UMImage image = new UMImage(this,"http://www.umeng.com/images/pic/social/integrated_3.png");
@@ -28,6 +33,10 @@ public class MainActivity extends BaseActivity {
     private ImageView iv_bottom;
     private TextView iv_username,iv_email;
     private Application myApplication;
+    private ImageLoader imageLoader;
+    private UserUtils userUtils;
+    private Intent loginIntent;
+    private User loginResultUser;
 
 
     @Override
@@ -36,9 +45,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initView();
         initValidata();
-        initListener();
-        bindData();
         myApplication = (Application)getApplication();
+        bindData();
+        initListener();
     }
     public void initView(){
         drag_layout = (DragLayout)findViewById(R.id.drag_layout);
@@ -47,11 +56,14 @@ public class MainActivity extends BaseActivity {
         ll1 = (LinearLayout)findViewById(R.id.ll1);
         iv_username = (TextView) findViewById(R.id.iv_username);
         iv_email = (TextView) findViewById(R.id.iv_email);
+        iv_bottom =(ImageView)findViewById(R.id.iv_buttom);
+        loginIntent = new Intent();
+        loginResultUser = new User();
     }
     public void initValidata(){
         lv_left_main.setAdapter(new LeftItemAdapter());
-
-
+        imageLoader = ImageLoader.getInstance();
+        loginIntent.setClass(this,LoginActivity.class);
     }
     public void initListener(){
         drag_layout.setDragListener(new CustomDragListener());
@@ -73,16 +85,35 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 if(null!=myApplication.getLoginUser()){
                     //head to user login activity
-                    openActivity(LoginActivity.class);
+                    startActivityForResult(loginIntent,1);
+
                 }else{
                     //head to user info activity
                 }
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bundle bundle = data.getBundleExtra("loginuser");
+        iv_email.setText(Application.getInstance().getLoginUser().getEmail());
+        iv_username.setText(bundle.getString("username"));
+        imageLoader.displayImage(bundle.getString("head_img"), iv_bottom);
+        Log.i("zhaojie", "onLoginActivityResult: ok");
 
     }
+
     public void bindData(){
+        Log.i("zhaojie", "bindData: "+Application.getInstance().getLoginUser().toString());
+        if(myApplication.getLoginUser().getUsername()!=null){
+            iv_email.setText(myApplication.getLoginUser().getEmail());
+            iv_username.setText(myApplication.getLoginUser().getUsername());
+            imageLoader.displayImage(myApplication.getLoginUser().getHead_img(), iv_bottom);
+            Log.i("zhaojie", "bindData:Application.getInstance.getLoginUser "+myApplication.getLoginUser().toString());
+        }else{
+            Log.i("zhaojie", "需要登陆 ");
+        }
 
     }
     class CustomDragListener implements DragLayout.DragListener{
@@ -98,7 +129,6 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onOpen() {
-
         }
     }
     class CustomOnClickListener implements View.OnClickListener{

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by ZhaoJie1234 on 2016/10/3.
  */
-public class MenuDataUtils {
+public class  MenuDataUtils {
     public static List<LeftitemMenu> getItemMenus(){
         List<LeftitemMenu> menus =new ArrayList<LeftitemMenu>();
         menus.add(new LeftitemMenu(R.drawable.icon_zhanghaoxinxi,"账号信息"));

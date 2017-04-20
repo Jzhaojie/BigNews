@@ -1,9 +1,12 @@
 package com.bupt.bignews.ui;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -43,6 +46,14 @@ public class ArticleActivity  extends BaseActivity implements DefineView {
    @Override
    public void onCreate(Bundle savedInstanceState){
        super.onCreate(savedInstanceState);
+       this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        当系统版本为4.4或者4.4以上的时候可以使用沉浸式状态栏
+       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+//            //透明状态栏
+           getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+           //透明导航栏
+           //getWindow().addFlags( WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+       }
        setContentView(R.layout.activity_article);
        initView();
        EventBus.getDefault().register(this);
@@ -84,6 +95,7 @@ public class ArticleActivity  extends BaseActivity implements DefineView {
         webSettings.setBlockNetworkImage(false);
         //开启缓存机制
         webSettings.setAppCacheEnabled(true);
+
     }
 
     @Override
