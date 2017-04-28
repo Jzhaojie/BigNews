@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="苟利国家生死以"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textColor="@color/color_black"/>
         <LinearLayout
             android:id="@+id/tag"

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/mask_tags_8">
 
+
     <include
         android:id="@+id/main_title"
         layout="@layout/title_layout" />

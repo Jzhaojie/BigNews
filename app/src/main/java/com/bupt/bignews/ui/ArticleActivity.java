@@ -79,7 +79,7 @@ public class ArticleActivity  extends BaseActivity implements DefineView {
         article_title =(TextView) findViewById(R.id.article_title);
         article_time =(TextView) findViewById(R.id.article_time);
         article_source =(TextView) findViewById(R.id.article_source);
-        source_image = (ImageView)findViewById(R.id.source_image);
+//        source_image = (ImageView)findViewById(R.id.source_image);
         imageLoader = ImageLoader.getInstance();
         article = (WebView)findViewById(R.id.article);
         article.setWebChromeClient(new WebChromeClient());
@@ -107,7 +107,7 @@ public class ArticleActivity  extends BaseActivity implements DefineView {
             mString = listNewsBean.getUrl();
             String[] MainUrl = mString.split("//");
             String[] url = MainUrl[1].split("/");
-            imageLoader.displayImage("http://" + url[0] + "/favicon.ico", source_image);
+//            imageLoader.displayImage("http://" + url[0] + "/favicon.ico", source_image);
             top_bar_title.setText(listNewsBean.getAuthor_name());
             Log.i("message",url[0] + "/favicon.ico");
             article.loadUrl(listNewsBean.getUrl());

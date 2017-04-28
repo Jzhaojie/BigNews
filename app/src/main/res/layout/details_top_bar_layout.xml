@@ -2,11 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="49dp"
+    android:layout_height="69dp"
     android:background="@color/mask_tags_8"
     android:id="@+id/bar_layout"
     android:gravity="bottom">
     <RelativeLayout
+        android:id="@+id/color_block"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/color_block"
         android:layout_width="match_parent"
         android:layout_height="49dp">
         <Button
@@ -21,15 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true">
-            <com.bupt.bignews.widget.RoundAngleImageView
-                android:id="@+id/source_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/backgroundimg"
-                app:roundHeight="20dp"
-                app:roundWidth="20dp"
-                android:scaleType="fitXY"
-                />
             <TextView
                 android:id="@+id/top_bar_title"
                 android:text="文章详情"
@@ -64,7 +62,7 @@
             android:layout_centerVertical="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/btn_night_selector"/>
+            android:background="@drawable/icon_collect"/>
     </RelativeLayout>
 
 </RelativeLayout>
